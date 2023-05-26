@@ -1,0 +1,7 @@
+
+{
+  "id": "contentful-gallery-layout",
+  "name": "Gallery layout style",
+  "srcdoc": "./app.html",
+  "fieldTypes": ["Symbol"]
+}
