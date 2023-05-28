@@ -1,0 +1,7 @@
+
+{
+  "id": "contentful-article-preview-alignment",
+  "name": "Article Preview Alignment",
+  "srcdoc": "./app.html",
+  "fieldTypes": ["Symbol"]
+}
