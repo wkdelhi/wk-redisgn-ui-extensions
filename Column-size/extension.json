@@ -1,0 +1,7 @@
+
+{
+  "id": "contentful-article-preview-size",
+  "name": "Article Preview Size",
+  "srcdoc": "./app.html",
+  "fieldTypes": ["Symbol"]
+}

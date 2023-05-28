@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8"/>
+    <title>Preview Size Widget</title>
+    <!--
+    Include styles from the Contentful app.
+
+    See http://contentful.github.io/ui-extensions-sdk/styleguide for information on
+    how to include and apply these styles.
+     -->
+    <link rel="stylesheet" href="https://contentful.github.io/ui-extensions-sdk/cf-extension.css">
+    <style>
+
+      body { margin: 0; }
+
+      .layout-selection {
+        padding: 10px 0;
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .layout-selection .choose-gallery label {
+        display: block;
+        margin-right: 20px;
+        margin-bottom: 20px;
+        cursor: pointer;
+        float: left;
+        width: 140px;
+      }
+
+
+      .layout-selection .choose-gallery label input[type='radio'] {
+        display: none;
+      }
+
+      .layout-selection figure {
+        margin: 0;
+        padding: 0;
+        width: 140px;
+        height: 140px;
+        display: flex;
+        align-items: center;
+        align-content: center;
+        justify-content: center;
+        opacity: 0.5;
+        border: 1px solid rgb(105, 105, 105);
+      }
+
+      .layout-selection img {
+        height: auto;
+        width: 110px;
+      }
+
+      .layout-selection figcaption {
+        background: rgb(105, 105, 105);
+        color: #fff;
+        padding: 0 10px;
+        display: flex;
+        align-items: center;
+        align-content: center;
+        justify-content: center;
+        height: 60px;
+        text-align: center;
+      }
+
+      .layout-selection label.is-active figure {
+        opacity: 1;
+      }
+
+      .layout-selection label.is-active figcaption {
+        background: rgb(0,0,0);
+      }
+
+      hr {
+        clear: both;
+        margin-top: 15px;
+      }
+      p {
+        clear: both;
+        margin-top: 15px;
+      }
+      .layout-selection .choose-gallery, .layout-selection .choose-size{
+        width: 100%;
+      }
+      .layout-selection .choose-heading{
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+      .layout-selection .choose-size label{
+        width: 100%;
+      }
+
+      /* Spacing Css */
+      .my-m{
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+      }
+      /* Spacing Css */
+
+    </style>
+
+    <!--
+    Load the Extensions API that is used to communicate with the containing app.
+    -->
+    <script src="https://contentful.github.io/ui-extensions-sdk/cf-extension-api.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+  </head>
+  <body>
+
+    <div class="layout-selection">
+      <div class="choose-gallery">
+      <label data-value="3 Columns">
+        <input type="radio" name="layout" value="3 Columns">
+        <figure>
+          <img src="layout-a.png" alt="top">
+        </figure>
+        <figcaption>
+          3 Columns
+        </figcaption>
+      </label>
+      <label data-value="4 Columns">
+        <input type="radio" name="layout" value="4 Columns">
+        <figure>
+          <img src="layout-b.png" alt="top">
+        </figure>
+        <figcaption>
+          4 Columns
+        </figcaption>
+      </label>
+      <label data-value="6 Columns">
+        <input type="radio" name="layout" value="6 Columns">
+        <figure>
+          <img src="layout-c.png" alt="top">
+        </figure>
+        <figcaption>
+          6 Columns
+        </figcaption>
+      </label>
+    </div>
+    </div>
+
+    <script>
+
+      // This is the main entry point for extensions.
+      //
+      // The extension API reference explains in detail what you can do with
+      // the 'api' object.
+      var cfExt = window.contentfulExtension || window.contentfulWidget
+      cfExt.init(function (api) {
+
+        // Whenever the size of this document changes we adjust the size of
+        // the IFrame in the Contentful App.
+        api.window.startAutoResizer()
+
+        var metaData = api.entry.getSys()
+        var field = api.field;
+
+        // layout related field
+
+        // set initial value on field
+        setInitial(field.getValue())
+        function setInitial(value) {
+          let $current = $('label').filter('[data-value="' + value +'"]');
+          if ($current.get(0)) {
+            $current.addClass('is-active');
+          }
+        }
+
+        // When the user selects a different option from the dropdown
+        // we update the entry field
+        $('input:radio').on('change', function () {
+          field.setValue(this.value);
+          $(this).parent().addClass('is-active');
+          $(this).parent().siblings().removeClass('is-active');
+        })
+      })
+
+    </script>
+  </body>
+</html>
